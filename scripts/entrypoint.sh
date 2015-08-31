@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+until mysqladmin -h$MYSQL_HOST -u$MYSQL_USER -P$MYSQL_PORT -p$MYSQL_PASS ping &>/dev/null; do
+  echo -n "."; sleep 0.2
+done
+
 # Mysql command.
 MYSQL_CONN="mysql -h$MYSQL_HOST -u$MYSQL_USER -P$MYSQL_PORT -p$MYSQL_PASS"
 $($MYSQL_CONN -e exit)
@@ -21,7 +25,6 @@ if [ $mysql_import_status -ne 0 ]; then
   echo 'Cannot import the standard dump file.'
   exit 1
 fi
-# echo "OK: mysql database imported."
 
 # Reconfigure openfire.
 sed -Ei "s/#OF_CONF_DB_HOST#/$MYSQL_HOST/" /data/etc/openfire.xml && \
@@ -30,7 +33,6 @@ sed -Ei "s/#OF_CONF_DB_USER_REPLACE#/$MYSQL_USER/" /data/etc/openfire.xml && \
 sed -Ei "s/#OF_CONF_DB_PASS_REPLACE#/$MYSQL_PASS/" /data/etc/openfire.xml && \
 sed -Ei "s/#OF_CONF_DB_PORT#/$MYSQL_PORT/" /data/etc/openfire.xml && \
 sed -Ei "s/#OF_CONF_DB_NAME#/$MYSQL_DATABASE/" /data/etc/openfire.xml
-# echo "OK: openfire reconfigured."
 
 # create openfire data dir
 mkdir -p ${OPENFIRE_DATA_DIR}
