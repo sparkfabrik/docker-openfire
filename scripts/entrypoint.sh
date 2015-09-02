@@ -27,8 +27,8 @@ if [ $mysql_create_status -ne 0 ]; then
 fi
 
 # Import the database
-sed "s/#REPLACE#/$MYSQL_APP_DATABASE/g" /bi_elitedom_openfire.template.sql > /tmp/bi_elitedom_openfire.sql
-$($MYSQL_CONN $MYSQL_DATABASE < /tmp/bi_elitedom_openfire.sql) 2>/dev/null
+sed "s/#REPLACE#/$MYSQL_APP_DATABASE/g" /openfire_database_template.sql > /tmp/openfire_database.sql
+$($MYSQL_CONN $MYSQL_DATABASE < /tmp/openfire_database.sql) 2>/dev/null
 mysql_import_status=`echo $?`
 if [ $mysql_import_status -ne 0 ]; then
   echo 'Cannot import the standard dump file.'
