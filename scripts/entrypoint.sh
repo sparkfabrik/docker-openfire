@@ -9,6 +9,15 @@ done
 MYSQL_CONN="mysql -h$MYSQL_HOST -u$MYSQL_USER -P$MYSQL_PORT -p$MYSQL_PASS"
 $($MYSQL_CONN -e exit)
 
+# Check if app database exists and that contain the users and users_relationship table.
+$MYSQL_CONN -e "CREATE DATABASE IF NOT EXISTS $MYSQL_APP_DATABASE ;" 2>/dev/null
+$($MYSQL_CONN $MYSQL_APP_DATABASE < /dump_db_app_temporary_tables.sql) 2>/dev/null
+mysql_import_status=`echo $?`
+if [ $mysql_import_status -ne 0 ]; then
+  echo 'Cannot import the application temporary tables dump file.'
+  exit 1
+fi
+
 # Create and import database.
 $MYSQL_CONN -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE ;" 2>/dev/null
 mysql_create_status=`echo $?`
