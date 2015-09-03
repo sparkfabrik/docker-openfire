@@ -90,6 +90,7 @@ fi
 if [[ -z ${1} ]]; then
   exec start-stop-daemon --start --chuid ${OPENFIRE_USER}:${OPENFIRE_USER} --exec /usr/bin/java -- \
     -server \
+    -Xmx${OPENFIRE_MAX_MEM}m \
     -DopenfireHome=/usr/share/openfire \
     -Dopenfire.lib.dir=/usr/share/openfire/lib \
     -classpath /usr/share/openfire/lib/startup.jar \

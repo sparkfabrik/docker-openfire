@@ -10,7 +10,8 @@ ENV MYSQL_HOST=mysql \
     MYSQL_PASS=db_pass \
     MYSQL_DATABASE=db_of \
     MYSQL_PORT=3306 \
-    MYSQL_APP_DATABASE=db_app
+    MYSQL_APP_DATABASE=db_app \
+    OPENFIRE_MAX_MEM=128
 
 # Openfire configurations.
 COPY conf /data/etc
