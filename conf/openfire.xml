@@ -41,7 +41,7 @@
       <driver>com.mysql.jdbc.Driver</driver>
       <serverURL>jdbc:mysql://#OF_CONF_DB_HOST#:#OF_CONF_DB_PORT#/#OF_CONF_DB_NAME#?rewriteBatchedStatements=true</serverURL>
       <username>#OF_CONF_DB_USER_REPLACE#</username>
-      <password>#OF_CONF_DB_USER_REPLACE#</password>
+      <password>#OF_CONF_DB_PASS_REPLACE#</password>
       <testSQL>select 1</testSQL>
       <testBeforeUse>false</testBeforeUse>
       <testAfterUse>false</testAfterUse>
